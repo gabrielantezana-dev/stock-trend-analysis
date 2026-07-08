@@ -1,1 +1,1 @@
-print("Stock initialized.")
+print("Intializing stock trend analysis module")
