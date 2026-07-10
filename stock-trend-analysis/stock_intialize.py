@@ -8,12 +8,12 @@ tickers = []
 stock_data = []
 lines = []
 
-for x in range(5):
+for x in range(len(ticker_symbols)):
     ticker = yf.Ticker(ticker_symbols[x])
     tickers.append(ticker)
 print(tickers)
 
-for x in range(5):
+for x in range(len(ticker_symbols)):
     stock_par_data = tickers[x].history(period="5y")
     stock_data.append(stock_par_data)
 
@@ -23,17 +23,17 @@ print(stock_data)
 plt.figure(figsize=(15, 4))
 # THIS IS FOR ONE SINGLE GRAPH
 
-for x in range(5):
+for x in range(len(ticker_symbols)):
     line = stock_data[x]['Close'].plot(kind='line', label=ticker_symbols[x])
     lines.append(line)
 
-mplcursors.cursor(hover=True)
+mplcursors.cursor(lines, hover=True)
 
 plt.legend()
 plt.show()
 
 # THIS IS FOR SEPERATE GRAPHS
 
-# for x in range(5):
+# for x in range(len(ticker_symbols)):
 #     stock_data[x]['Close'].plot(kind='line', color='orange')
 #     plt.show()
