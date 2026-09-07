@@ -30,7 +30,7 @@ print(tickers)
 # Load ticker's history of five year span.
 
 for x in range(len(ticker_symbols)):
-    stock_par_data = tickers[x].history(period="5y")
+    stock_par_data = tickers[x].history(period="2y")
     stock_data.append(stock_par_data)
 
 
@@ -51,7 +51,7 @@ elif stock_view == "info":
 else:
     print("Invalid option")
 
-plt.figure(figsize=(15, 4))
+plt.figure(figsize=(14, 4))
 
 # Single Graph
 # This Plots data for all the history shown in the terminal and labels it using mpl cursors hover feature to see exact values of any time in the stocks 5y time
