@@ -20,7 +20,9 @@ export default function HomePage() {
     const [drawKey, setDrawKey] = useState(0);
     const [graphData, setGraphData] = useState(null);
     const [hoverIndex, setHoverIndex] = useState(null);
+    const [detailsVisible, setDetailsVisible] = useState(false);
     const containerRef = useRef(null);
+    const detailsRef = useRef(null);
 
     useEffect(() => {
         const points = generateMockPoints();
@@ -67,6 +69,26 @@ export default function HomePage() {
         setHoverIndex(null);
         setDrawKey((prev) => prev + 1);
     }, []);
+
+    useEffect(() => {
+        const detailsSection = detailsRef.current;
+        if (!detailsSection) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) setDetailsVisible(true);
+            },
+            { threshold: 0.05, rootMargin: "0px 0px -8% 0px" }
+        );
+
+        observer.observe(detailsSection);
+        return () => observer.disconnect();
+    }, [graphData]);
+
+    const scrollToDetails = () => {
+        setDetailsVisible(true);
+        detailsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
 
     const handlePointerMove = (e) => {
         if (!containerRef.current || !graphData?.coords) return;
@@ -209,7 +231,7 @@ export default function HomePage() {
                     </p>
 
                     <div className="flex gap-4 justify-center items-center pointer-events-auto">
-                        <button className="bg-white text-black font-bold px-6 py-2.5 text-sm rounded-md hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                        <button onClick={scrollToDetails} className="bg-white text-black font-bold px-6 py-2.5 text-sm rounded-md hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                             Get Started →
                         </button>
                         <button className="bg-zinc-900/80 text-zinc-300 border border-zinc-700/80 px-6 py-2.5 text-sm rounded-md hover:bg-zinc-800 transition-colors backdrop-blur-sm">
@@ -219,9 +241,9 @@ export default function HomePage() {
                 </div>
             </section>
 
-            <section className="relative z-20 border-t border-zinc-800/80 bg-[#0a0a0a] px-6 py-24 md:px-12 lg:px-20">
+            <section ref={detailsRef} className="relative z-20 border-t border-zinc-800/80 bg-[#0a0a0a] px-6 py-24 md:px-12 lg:px-20">
                 <div className="mx-auto max-w-6xl">
-                    <div className="mb-16 max-w-2xl">
+                    <div className={`mb-16 max-w-2xl transition-all duration-700 ${detailsVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
                         <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-white">The Oneview edge</p>
                         <h2 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">A clearer view of what moves your money.</h2>
                         <p className="mt-6 text-base leading-8 text-zinc-400 md:text-lg">
@@ -229,7 +251,7 @@ export default function HomePage() {
                         </p>
                     </div>
 
-                    <div className="grid gap-px overflow-hidden border border-zinc-800 bg-zinc-800 md:grid-cols-3">
+                    <div className={`grid gap-px overflow-hidden border border-zinc-800 bg-zinc-800 transition-all duration-700 delay-150 md:grid-cols-3 ${detailsVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
                         {[
                             ["01", "See the signal", "Track price movement in real time with charts that keep the important changes in view."],
                             ["02", "Know the context", "Compare assets and timeframes without losing the bigger picture behind each number."],
@@ -243,7 +265,7 @@ export default function HomePage() {
                         ))}
                     </div>
 
-                    <div className="mt-24 grid gap-10 border-t border-zinc-800 pt-10 md:grid-cols-[1fr_auto] md:items-end">
+                    <div className={`mt-24 grid gap-10 border-t border-zinc-800 pt-10 transition-all duration-700 delay-300 md:grid-cols-[1fr_auto] md:items-end ${detailsVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
                         <div>
                             <p className="font-mono text-xs uppercase tracking-[0.3em] text-zinc-500">Built for the long view</p>
                             <p className="mt-4 max-w-xl text-2xl leading-snug text-zinc-200">A calm place to check in, zoom out, and make sense of the market.</p>
