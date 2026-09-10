@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Navbar from "@/app/components/Navbar";
 
 export default function Home() {
     const [email, setEmail] = useState("");
@@ -45,25 +44,14 @@ export default function Home() {
 
     return (
         <>
-            {/* ✅ NAVBAR AT TOP */}
-            <Navbar />
-
-            {/* ✅ PAGE CONTENT */}
-            <div className="flex min-h-screen items-center justify-center bg-red-200 font-sans">
-                <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-center py-32 px-16 bg-white">
+            <div className="flex min-h-screen items-center justify-center bg-[#050505] font-sans">
+                <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-center py-32 px-16 bg-[#0a0a0a] border border-zinc-800 shadow-[0_0_30px_rgba(255,255,255,0.04)]">
 
                     <div className="flex w-full flex-col items-center py-10 px-10">
-                        <img
-                            className="rounded-lg p-2"
-                            src="/Critiq.svg"
-                            alt="critiq logo"
-                            width={100}
-                            height={30}
-                        />
                     </div>
 
                     <div className="flex flex-col items-center gap-6 text-center">
-                        <h1 className="text-5xl font-semibold text-black">
+                        <h1 className="text-5xl font-semibold text-white">
                             Log In
                         </h1>
 
@@ -75,7 +63,7 @@ export default function Home() {
                                 type="email"
                                 placeholder="Email"
                                 required
-                                className="h-14 px-6 rounded-full border border-zinc-300"
+                                className="h-14 px-6 rounded-full border border-zinc-700 bg-zinc-950 text-white placeholder:text-zinc-400 outline-none focus:border-red-400/70 focus:ring-2 focus:ring-red-500/20"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -84,20 +72,20 @@ export default function Home() {
                                 type="password"
                                 placeholder="Password"
                                 required
-                                className="h-14 px-6 rounded-full border border-zinc-300"
+                                className="h-14 px-6 rounded-full border border-zinc-700 bg-zinc-950 text-white placeholder:text-zinc-400 outline-none focus:border-red-400/70 focus:ring-2 focus:ring-red-500/20"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
 
                             <button
                                 type="submit"
-                                className="h-14 w-full rounded-full bg-red-500 text-white hover:bg-red-600"
+                                className="h-14 w-full rounded-full bg-red-500 text-white font-semibold shadow-[0_0_18px_rgba(239,68,68,0.35)] hover:bg-red-600 transition-all"
                             >
                                 Log In
                             </button>
 
                             {message && (
-                                <p className="text-sm text-black">{message}</p>
+                                <p className="text-sm text-zinc-300">{message}</p>
                             )}
                         </form>
                     </div>
@@ -105,14 +93,14 @@ export default function Home() {
                     <div className="m-8 flex gap-4 justify-center">
                         <Link
                             href="/signup"
-                            className="flex h-12 items-center justify-center rounded-full bg-black text-white px-5 hover:bg-gray-800"
+                            className="flex h-12 items-center justify-center rounded-full bg-zinc-100 text-black px-5 hover:bg-white transition-colors"
                         >
                             Sign Up
                         </Link>
 
                         <Link
                             href="/password"
-                            className="flex h-12 items-center justify-center rounded-full border px-5 hover:bg-gray-100"
+                            className="flex h-12 items-center justify-center rounded-full border border-zinc-700 px-5 text-zinc-200 hover:bg-zinc-900 transition-colors"
                         >
                             Forgot Password?
                         </Link>
